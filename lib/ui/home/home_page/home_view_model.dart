@@ -20,13 +20,14 @@ class HomeViewModel extends ChangeNotifier {
       FirebaseFirestore.instance.collection('bmiResults').add({
         'height': height,
         'weight': weight,
-        'age': ageController.text,
+        'age': int.parse(ageController.text),
         'result': roundedResult,
         'timestamp': DateTime.now(),
       });
 
       print('BMI result saved to Fire store');
-      Navigator.pushNamed(context, ResultScreen.routeName);
+      Navigator.pushNamed(context, ResultScreen.routeName,
+          arguments: roundedResult);
       // Reset the form
       formKey.currentState!.reset();
     }
