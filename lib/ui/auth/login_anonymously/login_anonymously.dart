@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen>
               ),
             ),
             Positioned(
-              top: mq.width * .5,
+              top: mq.width * .4,
               width: mq.width,
               child: Container(
                 margin: const EdgeInsets.all(12),
