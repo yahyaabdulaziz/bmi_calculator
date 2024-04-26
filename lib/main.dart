@@ -1,15 +1,27 @@
+import 'package:bmi_calculator/result_provider.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_anonymously.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_view_model.dart';
+import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
+import 'package:bmi_calculator/ui/home/edit/edit_view_model.dart';
 import 'package:bmi_calculator/ui/home/home_page/home_screen.dart';
 import 'package:bmi_calculator/ui/home/result_page/result_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
-  runApp(const MyApp());
   // initializing Firebase with my app
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<ResultProvider>(
+      create: (_) => ResultProvider(),
+    ),
+    ChangeNotifierProvider<EditViewModel>(
+      create: (_) => EditViewModel(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +39,8 @@ class MyApp extends StatelessWidget {
               viewModel: LoginViewModel(),
             ),
         HomeScreen.routeName: (_) => HomeScreen(),
-        ResultScreen.routeName: (_) => ResultScreen()
+        ResultScreen.routeName: (_) => ResultScreen(),
+        EditScreen.routeName: (_) => EditScreen()
       },
       // first route the app will start with
       initialRoute: LoginScreen.routeName,

@@ -40,9 +40,19 @@ class _ResultScreenState extends State<ResultScreen> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Your Score",
-                        style: TextStyle(fontSize: 24, color: Colors.blue),
+                      Row(
+                        children: [
+                          const Text(
+                            "Your Score",
+                            style: TextStyle(fontSize: 24, color: Colors.blue),
+                          ),
+                          Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                viewModel.signOutAnonymously(context);
+                              },
+                              icon: Icon(Icons.logout))
+                        ],
                       ),
                       const SizedBox(
                         height: 10,

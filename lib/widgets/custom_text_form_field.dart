@@ -2,16 +2,17 @@ import 'package:bmi_calculator/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  String hintText;
+  String? hintText;
 
-
+  String? val;
   TextEditingController controller;
 
   String? Function(String?)? validator;
   TextInputType type;
 
   CustomTextFormField({
-    required this.hintText,
+    this.val,
+    this.hintText,
     required this.controller,
     required this.validator,
     required this.type,
@@ -44,6 +45,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       validator: validator,
       keyboardType: type,
+      initialValue: val,
     );
   }
 }

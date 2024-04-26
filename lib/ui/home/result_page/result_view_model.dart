@@ -1,5 +1,7 @@
+import 'package:bmi_calculator/ui/auth/login_anonymously/login_anonymously.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ResultViewModel {
@@ -46,6 +48,16 @@ class ResultViewModel {
       bmiStatus = "Underweight";
       bmiInterpretation = "Try to increase the weight";
       bmiStatusColor = Colors.red;
+    }
+  }
+
+  void signOutAnonymously(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      print('User signed out successfully');
+      Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    } catch (e) {
+      print('Failed to sign out: $e');
     }
   }
 }

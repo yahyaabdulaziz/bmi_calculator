@@ -1,13 +1,18 @@
+import 'package:bmi_calculator/result_provider.dart';
+import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListItemWidget extends StatelessWidget {
   final ResultModel resultModel;
+  late ResultProvider provider;
 
-  const ListItemWidget({required this.resultModel});
+  ListItemWidget({required this.resultModel});
 
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
     return Container(
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.all(6),
@@ -49,7 +54,12 @@ class ListItemWidget extends StatelessWidget {
                         color: Colors.white),
                     child: Text('Age: ${resultModel.age}')),
                 Spacer(),
-                InkWell(onTap: () {}, child: Icon(Icons.edit))
+                InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, EditScreen.routeName,
+                          arguments: resultModel);
+                    },
+                    child: Icon(Icons.edit))
               ],
             ),
           ),
@@ -68,7 +78,11 @@ class ListItemWidget extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     )),
                 Spacer(),
-                InkWell(onTap: () {}, child: Icon(Icons.delete))
+                InkWell(
+                    onTap: () {
+                      provider.delete(resultModel.date);
+                    },
+                    child: Icon(Icons.delete))
               ],
             ),
           ),
