@@ -5,7 +5,6 @@ import 'package:bmi_calculator/widgets/custom_button.dart';
 import 'package:bmi_calculator/widgets/custom_text_form_field.dart';
 import 'package:bmi_calculator/widgets/form_label.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class EditScreen extends StatefulWidget {
   static const String routeName = "EditScreen";
@@ -22,7 +21,6 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     var arg = ModalRoute.of(context)?.settings.arguments as ResultModel;
-    var resProvider = Provider.of<EditViewModel>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -143,7 +141,7 @@ class _EditScreenState extends State<EditScreen> {
                 CustomButtonWidget(
                     title: 'Update',
                     onPressed: () {
-                      viewModel.updateForm();
+                      viewModel.updateForm(context, arg, arg.date);
                     }),
               ],
             ),

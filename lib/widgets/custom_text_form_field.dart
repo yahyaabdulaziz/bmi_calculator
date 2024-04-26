@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   String? hintText;
-
   String? val;
   TextEditingController controller;
 

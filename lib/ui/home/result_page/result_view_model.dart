@@ -11,10 +11,11 @@ class ResultViewModel {
 
   Color? bmiStatusColor;
 
-  Stream<List<ResultModel>> fetchEntriesOrderedByDate() {
+  Stream<List<ResultModel>> fetchEntriesOrderedByDate(int limit) {
     return FirebaseFirestore.instance
         .collection('bmiResults')
         .orderBy('timestamp', descending: true)
+        .limit(limit)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) {
               final data = doc.data();
