@@ -1,10 +1,11 @@
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_view_model.dart';
 import 'package:bmi_calculator/utils/app_assets.dart';
 import 'package:bmi_calculator/utils/app_color.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const String routeName = "LoginScreen";
+  static const String routeName = "${AppStrings.loginScreenRouteName}";
   final LoginViewModel viewModel;
 
   const LoginScreen({Key? key, required this.viewModel}) : super(key: key);
@@ -71,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen>
               child: Container(
                 margin: const EdgeInsets.all(12),
                 child: const Text(
-                  "Welcome To BMI Calculator Application",
+                  "${AppStrings.welcomeMessage}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
@@ -104,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           SizedBox(width: 8),
                           const Text(
-                            "Login Anonymously",
+                            "${AppStrings.loginAnonymously}",
                             style: TextStyle(
                                 fontSize: 20, color: AppColors.primaryColor),
                           ),

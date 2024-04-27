@@ -1,6 +1,8 @@
 import 'package:bmi_calculator/ui/home/result_page/result_view_model.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
 import 'package:bmi_calculator/utils/app_color.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
+import 'package:bmi_calculator/utils/constants.dart';
 import 'package:bmi_calculator/widgets/list_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     var arg = ModalRoute.of(context)?.settings.arguments as double;
     int _limit = 5; // Number of items to fetch per page
     List<ResultModel> _entries = [];
@@ -42,7 +45,7 @@ class _ResultScreenState extends State<ResultScreen> {
       children: [
         Container(
             margin: const EdgeInsets.only(top: 8),
-            height: MediaQuery.of(context).size.height * .55,
+            height: height * .60,
             padding: const EdgeInsets.all(12),
             child: Card(
                 elevation: 8,
@@ -56,7 +59,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           Container(
                             margin: EdgeInsets.only(left: 12),
                             child: const Text(
-                              "Your Score",
+                              "${AppStrings.yourScore}",
                               style:
                                   TextStyle(fontSize: 24, color: Colors.blue),
                             ),
@@ -76,39 +79,42 @@ class _ResultScreenState extends State<ResultScreen> {
                         height: 10,
                       ),
                       PrettyGauge(
-                        gaugeSize: 200,
+                        gaugeSize: height * .3,
                         minValue: 0,
                         maxValue: 40,
                         segments: [
-                          GaugeSegment('UnderWeight', 18.5, Colors.red),
-                          GaugeSegment('Normal', 6.4, Colors.green),
-                          GaugeSegment('OverWeight', 5, Colors.orange),
-                          GaugeSegment('Obese', 10.1, Colors.pink),
+                          GaugeSegment(
+                              '${AppStrings.underWeight}', 18.5, Colors.red),
+                          GaugeSegment(
+                              '${AppStrings.normal}', 6.4, Colors.green),
+                          GaugeSegment(
+                              '${AppStrings.overWeight}', 5, Colors.orange),
+                          GaugeSegment('${AppStrings.obse}', 10.1, Colors.pink),
                         ],
                         valueWidget: Text(
-                          "BMI=${arg.toStringAsFixed(1)}",
-                          style: const TextStyle(fontSize: 24),
+                          "${AppStrings.bmi}=${arg.toStringAsFixed(1)}",
+                          style: const TextStyle(fontSize: 22),
                         ),
                         currentValue: arg.toDouble(),
                         needleColor: Colors.blue,
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: height * .01,
                       ),
                       Text(
                         viewModel.bmiStatus!,
                         style: TextStyle(
                             fontSize: 20, color: viewModel.bmiStatusColor!),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: height * .01,
                       ),
                       Text(
                         viewModel.bmiInterpretation!,
                         style: const TextStyle(fontSize: 15),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      SizedBox(
+                        height: height * .01,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -117,16 +123,16 @@ class _ResultScreenState extends State<ResultScreen> {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text("Re-calculate")),
-                          const SizedBox(
-                            width: 10,
+                              child: const Text("${AppStrings.reCalculate}")),
+                          SizedBox(
+                            width: height * .03,
                           ),
                           ElevatedButton(
                               onPressed: () {
                                 Share.share(
-                                    "Your BMI is ${arg.toStringAsFixed(1)} ");
+                                    "${AppStrings.yourBMIIs} ${arg.toStringAsFixed(1)} ");
                               },
-                              child: const Text("Share")),
+                              child: const Text("${AppStrings.share}")),
                         ],
                       ),
                     ]))),
@@ -134,7 +140,7 @@ class _ResultScreenState extends State<ResultScreen> {
           height: MediaQuery.of(context).size.height * .04,
           margin: const EdgeInsets.symmetric(horizontal: 12),
           child: const Text(
-            "All Entries",
+            "${AppStrings.allEntries}",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: 16,
@@ -145,16 +151,17 @@ class _ResultScreenState extends State<ResultScreen> {
         ),
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 8),
-          height: MediaQuery.of(context).size.height * .38,
+          height: height * .38,
           child: StreamBuilder<List<ResultModel>>(
             stream: viewModel.fetchEntriesOrderedByDate(_limit),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                return Center(
+                    child: Text('${AppStrings.error}: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(child: Text('No entries found.'));
+                return Center(child: Text('${AppStrings.noEntriesFound}'));
               } else {
                 final entries = snapshot.data!;
                 _entries
@@ -193,14 +200,14 @@ class _ResultScreenState extends State<ResultScreen> {
       QuerySnapshot querySnapshot;
       if (_lastDocument == null) {
         querySnapshot = await FirebaseFirestore.instance
-            .collection('bmiResults')
-            .orderBy('timestamp', descending: true)
+            .collection('${Constants.collectionName}')
+            .orderBy('${AppStrings.timestamp}', descending: true)
             .limit(_limit)
             .get();
       } else {
         querySnapshot = await FirebaseFirestore.instance
-            .collection('bmiResults')
-            .orderBy('timestamp', descending: true)
+            .collection('${Constants.collectionName}')
+            .orderBy('${AppStrings.timestamp}', descending: true)
             .startAfterDocument(_lastDocument!)
             .limit(_limit)
             .get();

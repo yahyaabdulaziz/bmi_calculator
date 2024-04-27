@@ -1,4 +1,6 @@
 import 'package:bmi_calculator/ui/home/result_page/result_screen.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
+import 'package:bmi_calculator/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class HomeViewModel extends ChangeNotifier {
       double roundedResult = double.parse(bmiResult.toStringAsFixed(1));
 
       // Save result and current time to Fire store
-      FirebaseFirestore.instance.collection('bmiResults').add({
+      FirebaseFirestore.instance.collection("${Constants.collectionName}").add({
         'height': height,
         'weight': weight,
         'age': int.parse(ageController.text),
@@ -25,7 +27,7 @@ class HomeViewModel extends ChangeNotifier {
         'timestamp': DateTime.now(),
       });
 
-      print('BMI result saved to Fire store');
+      print('${AppStrings.bmiResultSavedToFirestore}');
       Navigator.pushNamed(context, ResultScreen.routeName,
           arguments: roundedResult);
       // Reset the form

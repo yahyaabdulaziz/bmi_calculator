@@ -1,5 +1,6 @@
 import 'package:bmi_calculator/ui/home/home_page/home_view_model.dart';
 import 'package:bmi_calculator/utils/app_assets.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
 import 'package:bmi_calculator/widgets/custom_button.dart';
 import 'package:bmi_calculator/widgets/custom_text_form_field.dart';
 import 'package:bmi_calculator/widgets/form_label.dart';
@@ -19,124 +20,124 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(height * .03),
           child: Form(
             key: viewModel.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(
-                  height: 60,
+                SizedBox(
+                  height: height * .08,
                 ),
-                Image.asset(AppAssets.splash,
-                    height: MediaQuery.of(context).size.height * .12),
-                const SizedBox(
-                  height: 75,
+                Image.asset(AppAssets.splash, height: height * .12),
+                SizedBox(
+                  height: height * .09,
                 ),
                 Text(
-                  'Welcome Back To BMI Application',
+                  '${AppStrings.welcomeMessage}',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: height * .06,
                 ),
                 FormLabelWidget(
-                  label: '  Weight',
+                  label: '  ${AppStrings.weight}',
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: height * .01,
                 ),
                 CustomTextFormField(
                     controller: viewModel.weightController,
-                    hintText: 'enter your weight Weight (in Kg)',
+                    hintText: '${AppStrings.enterWeightMessage}',
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a number';
+                        return '${AppStrings.enterNumber}';
                       }
 
-                      final number = int.tryParse(value!);
+                      final number = int.tryParse(value);
 
                       if (number == null) {
-                        return 'Please enter a valid number';
+                        return '${AppStrings.enterValidNumber}';
                       }
 
                       if (number < 0 || number > 200) {
-                        return 'Number must be between 0 and 200';
+                        return '${AppStrings.weightValidationMessage}';
                       }
 
                       return null;
                     },
                     type: TextInputType.number),
-                const SizedBox(
-                  height: 32,
+                SizedBox(
+                  height: height * .04,
                 ),
                 FormLabelWidget(
-                  label: '  Height',
+                  label: '  ${AppStrings.height}',
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: height * .01,
                 ),
                 CustomTextFormField(
-                  hintText: 'enter your Height (in M)',
+                  hintText: '${AppStrings.enterHeightMessage}',
                   controller: viewModel.heightController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter a your height (in M)';
+                      return '${AppStrings.enterHeightMessage}';
                     }
 
-                    final number = double.tryParse(value!);
+                    final number = double.tryParse(value);
 
                     if (number == null) {
-                      return 'Please enter a valid number';
+                      return '${AppStrings.enterValidNumber}';
                     }
 
                     if (number < 0 || number > 2) {
-                      return 'Number must be between 0 and 2';
+                      return '${AppStrings.heightValidationMessage}';
                     }
 
                     return null;
                   },
                   type: TextInputType.number,
                 ),
-                const SizedBox(
-                  height: 32,
+                SizedBox(
+                  height: height * .04,
                 ),
                 FormLabelWidget(
-                  label: '  Age',
+                  label: '  ${AppStrings.age}',
                 ),
-                const SizedBox(
-                  height: 10,
+                SizedBox(
+                  height: height * .01,
                 ),
                 CustomTextFormField(
-                  hintText: 'enter your Age',
+                  hintText: '${AppStrings.enterAge}',
                   controller: viewModel.ageController,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter a number';
+                      return '${AppStrings.enterNumber}';
                     }
 
-                    final number = int.tryParse(value!);
+                    final number = int.tryParse(value);
 
                     if (number == null) {
-                      return 'Please enter a valid number';
+                      return '${AppStrings.enterValidNumber}';
                     }
 
                     if (number < 0 || number > 200) {
-                      return 'Number must be between 0 and 150';
+                      return '${AppStrings.ageValidationMessage}';
                     }
 
                     return null;
                   },
                   type: TextInputType.number,
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: height * .07,
                 ),
                 CustomButtonWidget(
-                    title: 'Submit',
+                    title: '${AppStrings.submit}',
                     onPressed: () {
                       viewModel.submitForm(context);
                     }),

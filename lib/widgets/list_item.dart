@@ -1,21 +1,26 @@
-import 'package:bmi_calculator/result_provider.dart';
+import 'package:bmi_calculator/provider/result_provider.dart';
 import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
+import 'package:bmi_calculator/utils/app_color.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListItemWidget extends StatelessWidget {
   final ResultModel resultModel;
-  late ResultProvider provider;
 
   ListItemWidget({required this.resultModel});
 
+  late ResultProvider provider;
+
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     provider = Provider.of(context);
     return Container(
-      margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(6),
+      height: width * .35,
+      margin: EdgeInsets.all(width * .02),
+      padding: EdgeInsets.all(width * .01),
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.3),
@@ -23,7 +28,7 @@ class ListItemWidget extends StatelessWidget {
           blurRadius: 7,
           offset: const Offset(0, 2), // changes position of shadow
         ),
-      ], borderRadius: BorderRadius.circular(12), color: Colors.white),
+      ], borderRadius: BorderRadius.circular(width * .04), color: Colors.white),
       child: Column(
         children: [
           Container(
@@ -31,28 +36,28 @@ class ListItemWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(width * .013),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(width * .03),
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
-                    child: Text('Height: ${resultModel.height}')),
-                SizedBox(width: 6),
+                    child: Text('${AppStrings.height}: ${resultModel.height}')),
+                SizedBox(width: width * .03),
                 Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(width * .013),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(width * .03),
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
-                    child: Text('Weight: ${resultModel.weight}')),
-                SizedBox(width: 6),
+                    child: Text('${AppStrings.weight}: ${resultModel.weight}')),
+                SizedBox(width: width * .03),
                 Container(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(width * .013),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(width * .03),
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
-                    child: Text('Age: ${resultModel.age}')),
+                    child: Text('${AppStrings.age}: ${resultModel.age}')),
                 Spacer(),
                 InkWell(
                     onTap: () {
@@ -68,14 +73,17 @@ class ListItemWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(width * .03),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(width * .1),
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
                     child: Text(
-                      'BMI Result: ${resultModel.bmiResult}',
-                      style: TextStyle(fontWeight: FontWeight.w700),
+                      '${AppStrings.bmiResult}: ${resultModel.bmiResult}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.italic,
+                          color: AppColors.primaryColor),
                     )),
                 Spacer(),
                 InkWell(

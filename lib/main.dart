@@ -1,4 +1,4 @@
-import 'package:bmi_calculator/result_provider.dart';
+import 'package:bmi_calculator/provider/result_provider.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_anonymously.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_view_model.dart';
 import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
@@ -14,6 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
+  // using Provider State Management
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<ResultProvider>(
       create: (_) => ResultProvider(),
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BMI Calculator',
       routes: {
         // all the routes of my app
         LoginScreen.routeName: (_) => LoginScreen(

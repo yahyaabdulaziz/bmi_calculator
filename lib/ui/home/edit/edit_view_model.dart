@@ -1,5 +1,7 @@
 import 'package:bmi_calculator/ui/home/result_page/result_screen.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
+import 'package:bmi_calculator/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +23,11 @@ class EditViewModel extends ChangeNotifier {
       double newRoundedResult = double.parse(newBmiResult.toStringAsFixed(1));
 
       final collectionReference =
-          FirebaseFirestore.instance.collection('bmiResults');
+          FirebaseFirestore.instance.collection('${Constants.collectionName}');
 
       // Check if the document exists before updating it
       collectionReference
-          .where('timestamp', isEqualTo: timestamp)
+          .where('${AppStrings.timestamp}', isEqualTo: timestamp)
           .get()
           .then((querySnapshot) {
         if (querySnapshot.docs.isNotEmpty) {
@@ -42,18 +44,18 @@ class EditViewModel extends ChangeNotifier {
 
           // Update the document with the specified field value as document ID
           collectionReference.doc(documentId).update(data).then((_) {
-            print('Document updated successfully');
+            print('${AppStrings.documentUpdatedSuccessfully}');
             Navigator.pushNamed(context, ResultScreen.routeName,
                 arguments: newRoundedResult);
           }).catchError((error) {
-            print('Failed to update document: $error');
+            print('${AppStrings.failedToUpdateDocument}: $error');
           });
         } else {
-          print('Document not found');
+          print('${AppStrings.documentNotFound}');
           // Handle document not found
         }
       }).catchError((error) {
-        print('Error checking document existence: $error');
+        print('${AppStrings.errorCheckingDocumentExistence}: $error');
       });
     }
   }
