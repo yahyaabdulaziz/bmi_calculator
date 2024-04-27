@@ -1,15 +1,35 @@
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_anonymously.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
+import 'package:bmi_calculator/utils/app_strings.dart';
+import 'package:bmi_calculator/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ResultViewModel {
+class ResultViewModel extends ChangeNotifier {
   String? bmiStatus;
 
   String? bmiInterpretation;
 
   Color? bmiStatusColor;
+
+  List<ResultModel> entries = []; // Move _entries outside of the build method
+
+
+  void delete(DateTime timestamp) async {
+    final collection =
+        FirebaseFirestore.instance.collection(Constants.collectionName);
+    final querySnapshot = await collection
+        .where('${AppStrings.timestamp}', isEqualTo: timestamp)
+        .get();
+
+    querySnapshot.docs.forEach((doc) async {
+      await doc.reference.delete();
+    });
+
+    notifyListeners();
+    print('${AppStrings.deleted}');
+  }
 
   Stream<List<ResultModel>> fetchEntriesOrderedByDate(int limit) {
     return FirebaseFirestore.instance

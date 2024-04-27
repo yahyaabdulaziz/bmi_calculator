@@ -42,13 +42,10 @@ class AppStrings {
   static const String obse = "Obese";
   static const String bmi = "BMI";
 
-
-
   static const String reCalculate = "Re-calculate";
   static const String yourBMIIs = "Your BMI is";
   static const String share = "Share";
   static const String allEntries = "All Entries";
   static const String error = "Error";
   static const String noEntriesFound = "No entries found.";
-
 }

@@ -54,7 +54,7 @@ class _EditScreenState extends State<EditScreen> {
                   height: height * .01,
                 ),
                 CustomTextFormField(
-                    controller: viewModel.newHeightController,
+                    controller: viewModel.newWeightController,
                     hintText: "${arg.weight}",
                     validator: (value) {
                       if (value!.isEmpty) {

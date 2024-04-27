@@ -1,5 +1,5 @@
-import 'package:bmi_calculator/provider/result_provider.dart';
 import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
+import 'package:bmi_calculator/ui/home/result_page/result_view_model.dart';
 import 'package:bmi_calculator/ui/model/result_model.dart';
 import 'package:bmi_calculator/utils/app_color.dart';
 import 'package:bmi_calculator/utils/app_strings.dart';
@@ -11,7 +11,7 @@ class ListItemWidget extends StatelessWidget {
 
   ListItemWidget({required this.resultModel});
 
-  late ResultProvider provider;
+  late ResultViewModel provider;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ListItemWidget extends StatelessWidget {
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
                     child: Text('${AppStrings.height}: ${resultModel.height}')),
-                SizedBox(width: width * .03),
+                SizedBox(width: width * .02),
                 Container(
                     padding: EdgeInsets.all(width * .013),
                     decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class ListItemWidget extends StatelessWidget {
                         border: Border.all(color: Colors.deepPurple, width: 1),
                         color: Colors.white),
                     child: Text('${AppStrings.weight}: ${resultModel.weight}')),
-                SizedBox(width: width * .03),
+                SizedBox(width: width * .02),
                 Container(
                     padding: EdgeInsets.all(width * .013),
                     decoration: BoxDecoration(

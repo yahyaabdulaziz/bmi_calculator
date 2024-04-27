@@ -159,14 +159,17 @@ class _ResultScreenState extends State<ResultScreen> {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(
-                    child: Text('${AppStrings.error}: ${snapshot.error}'));
+                  child: Text('${AppStrings.error}: ${snapshot.error}'),
+                );
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return Center(child: Text('${AppStrings.noEntriesFound}'));
               } else {
                 final entries = snapshot.data!;
-                _entries
-                    .addAll(entries); // Append new entries to the existing list
+                viewModel.entries =
+                    entries; // Assign the new entries directly to _entries
+
                 return NotificationListener<ScrollNotification>(
+                  key: UniqueKey(),
                   onNotification: (ScrollNotification scrollInfo) {
                     if (!_isRequesting &&
                         !_isFinish &&
@@ -177,9 +180,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     return true;
                   },
                   child: ListView.builder(
-                    itemCount: _entries.length,
+                    itemCount: viewModel.entries.length,
                     itemBuilder: (context, index) {
-                      final list = _entries[index];
+                      final list = viewModel.entries[index];
                       return ListItemWidget(resultModel: list);
                     },
                   ),

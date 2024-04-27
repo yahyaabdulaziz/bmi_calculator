@@ -2,6 +2,7 @@ import 'package:bmi_calculator/ui/auth/login_anonymously/login_view_model.dart';
 import 'package:bmi_calculator/utils/app_assets.dart';
 import 'package:bmi_calculator/utils/app_color.dart';
 import 'package:bmi_calculator/utils/app_strings.dart';
+import 'package:bmi_calculator/widgets/error_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -86,31 +87,43 @@ class _LoginScreenState extends State<LoginScreen>
               top: mq.width * 1.4,
               width: mq.width,
               child: Container(
-                  margin: const EdgeInsets.all(12),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        widget.viewModel.login(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.login_rounded,
-                            color: AppColors.primaryColor,
-                          ),
-                          SizedBox(width: 8),
-                          const Text(
-                            "${AppStrings.loginAnonymously}",
-                            style: TextStyle(
-                                fontSize: 20, color: AppColors.primaryColor),
-                          ),
-                        ],
-                      ))),
+                margin: const EdgeInsets.all(12),
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.viewModel.login(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Colors.white,
+                  ),
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      if (widget.viewModel.hasInternetError) {
+                        return ErrorView(message: 'No internet connection');
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.login_rounded,
+                              color: AppColors.primaryColor,
+                            ),
+                            SizedBox(width: 8),
+                            const Text(
+                              "${AppStrings.loginAnonymously}",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),

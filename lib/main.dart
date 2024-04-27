@@ -1,10 +1,10 @@
-import 'package:bmi_calculator/provider/result_provider.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_anonymously.dart';
 import 'package:bmi_calculator/ui/auth/login_anonymously/login_view_model.dart';
 import 'package:bmi_calculator/ui/home/edit/edit_screen.dart';
 import 'package:bmi_calculator/ui/home/edit/edit_view_model.dart';
 import 'package:bmi_calculator/ui/home/home_page/home_screen.dart';
 import 'package:bmi_calculator/ui/home/result_page/result_screen.dart';
+import 'package:bmi_calculator/ui/home/result_page/result_view_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +16,8 @@ void main() async {
 
   // using Provider State Management
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<ResultProvider>(
-      create: (_) => ResultProvider(),
+    ChangeNotifierProvider<ResultViewModel>(
+      create: (_) => ResultViewModel(),
     ),
     ChangeNotifierProvider<EditViewModel>(
       create: (_) => EditViewModel(),

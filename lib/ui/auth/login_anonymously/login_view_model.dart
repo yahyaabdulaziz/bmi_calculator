@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginViewModel {
+  bool hasInternetError = false;
+
   Future login(BuildContext context) async {
     try {
       final userCredential = await FirebaseAuth.instance.signInAnonymously();
@@ -16,6 +18,8 @@ class LoginViewModel {
         default:
           print("Unknown error.");
       }
+      hasInternetError = true;
     }
   }
+
 }
